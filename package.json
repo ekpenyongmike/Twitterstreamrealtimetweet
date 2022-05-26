@@ -1,0 +1,19 @@
+{
+  "name": "twitter_searchvideos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index",
+     "dev": "node server/index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "needle": "^3.0.0",
+    "socket.io": "^4.4.1"
+  }
+}

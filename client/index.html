@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <title>Twitter Video App</title>
+</head>
+
+<body>
+  
+ 
+  <nav class="navbar navbar-dark bg-primary mb-3">
+    <div class="container">
+      <span class="navbar-brand">Search and stream twitter videos</span>
+    </div>
+  </nav>
+  <div  class="container">
+    <div id="search" class="card card-body bg-light mb-2">
+      <h4>Twitter</h4>
+      <form id="search-form">
+        <!-- this form contains the search box -->
+        <div class="form-group">
+          <input type="text" id="search-input" class="form-control mb-3" placeholder="Search Term...">
+        </div>
+     
+          <!-- this is the button to search  -->
+          <button type="submit" class="btn btn-dark btn-block mt-4">Search</button>
+      </form>
+    <!-- with the id below we will use it to diplay the result in javascript -->
+    <div id="tweetStream"></div>
+  
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js" integrity="sha512-MgkNs0gNdrnOM7k+0L+wgiRc5aLgl74sJQKbIWegVIMvVGPc1+gc1L2oK9Wf/D9pq58eqIJAxOonYPVE5UwUFA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+</script>
+<!-- <script src="../server/index.js"></script> -->
+  <script>
+    const tweetStream= document.getElementById('tweetStream')
+    const socket =io()
+
+    const tweets=[]
+    socket.on('connect',()=>{
+      console.log('connected server')
+    })
+    socket.on('tweet',(tweet)=>{
+  //  console.log(tweet)
+  const tweetData ={
+   id:tweet.data.id,
+   text:tweet.data.text,
+   username:`@${tweet.includes.users[0].username}`,
+  }
+  const tweetEl= document.createElement('div')
+  tweetEl.className='card my-4'
+  tweetEl.innerHTML=`
+     <div class= "card-body"> 
+      <h5 class="card-title">${tweetData.text}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">${tweetData.username}</h6>
+      <a class="btn btn-primary mt-3" href="https://twitter.com/${tweetData.username}/status/${tweetData.id}" target="-blank">
+        <i class="fab fa-twitter"></i> See tweet
+        </a>
+      </div>
+
+         
+  `
+  tweetStream.appendChild(tweetEl)
+  })
+  </script>
+ 
+</body>
+
+</html>
